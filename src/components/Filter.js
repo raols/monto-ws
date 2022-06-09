@@ -5,25 +5,13 @@ function Filter(props) {
   const [sortOrder, setSortOrder] = useState("DESC");
   const [filterType, setFilterType] = useState("ALL");
 
-  function handleSearchCompanies(value) {
-    setSearchString(value);
-  }
-
-  function handleSortOrder(order) {
-    setSortOrder(order);
-  }
-
-  function handlefilterType(type) {
-    setFilterType(type);
-  }
-
   function handleSubmit(e) {
     e.preventDefault();
 
     let filteredCompanies = [...props.all];
     if (searchString !== "") filteredCompanies = filteredCompanies.filter(company => company.name.toLowerCase().includes(searchString.toLocaleLowerCase()))
     if (filterType !== "ALL") filteredCompanies = filteredCompanies.filter(company => company.type === filterType);
-    
+
     if (sortOrder === "ASC") props.setFiltered(filteredCompanies.sort((a, b) => a.id - b.id));
     else props.setFiltered(filteredCompanies.sort((a, b) => b.id - a.id));
   }
@@ -36,15 +24,15 @@ function Filter(props) {
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           type="text"
           value={searchString}
-          onChange={(e) => handleSearchCompanies(e.target.value)}
+          onChange={(e) => setSearchString(e.target.value)}
         />
       </label>
       <label className="block py-2">
         Sort by id:
-        <select 
+        <select
           className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           value={sortOrder}
-          onChange={(e) => handleSortOrder(e.target.value)}
+          onChange={(e) => setSortOrder(e.target.value)}
         >
           <option value={"ASC"}>ASC</option>
           <option value={"DESC"}>DESC</option>
@@ -55,7 +43,7 @@ function Filter(props) {
         <select
           className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           value={filterType}
-          onChange={(e) => handlefilterType(e.target.value)}
+          onChange={(e) => setFilterType(e.target.value)}
         >
           <option value={"ALL"}>ALL</option>
           <option value={"AB"}>AB</option>
